@@ -1,2 +1,2 @@
-# CoverCollector-API
+# CoverCollector
 WIP
