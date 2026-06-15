@@ -20,7 +20,8 @@ public class ArtworkController {
     public ResponseEntity<?> getAlbumCover(@RequestParam String artist, @RequestParam String album) {
 
         String searchTerm = artist + " " + album;
-        String url = "https://itunes.apple.com/search?term=" + searchTerm + "&entity=album&limit=3";
+        String url = "https://itunes.apple.com/search?term=" + searchTerm + "&entity=album&limit=15";
+        System.out.println("url: " + url);
         String json = restClient.get().uri(url).retrieve().body(String.class);
         JsonNode root = mapper.readTree(json);
 
@@ -33,14 +34,18 @@ public class ArtworkController {
         for (JsonNode result: results) {
             String artistName =  result.path("artistName").asString();
             String albumName = result.path("collectionName").asString();
+            if (albumName.contains("Single")){
+                continue;
+            }
             String releaseDate = result.path("releaseDate").asString().substring(0, 4);
             String lowResURL = result.path("artworkUrl100").asString();
+            String newLowResURL = lowResURL.replace("100x100bb.jpg", "500x500bb.jpg");
             String highResURL = lowResURL.replace("100x100bb.jpg", "3000x3000bb.jpg");
-
-
+            AlbumCover albumCover = new AlbumCover(artistName, albumName, releaseDate, newLowResURL, highResURL);
+            albumCovers.add(albumCover);
         }
 
-        return null;
+        return ResponseEntity.ok(albumCovers);
     }
 
 }

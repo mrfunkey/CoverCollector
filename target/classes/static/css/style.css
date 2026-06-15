@@ -1,0 +1,119 @@
+body {
+    font-size: 14px;
+    background-color: #010816;
+    font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #dfe9fc;
+}
+
+.label {
+    font-size: 20px;
+}
+
+.search-bar {
+    padding: 10px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+input[type="text"] {
+    font-size: 1.15rem;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 30px;
+}
+
+.search-button {
+    background-color: transparent;
+    color: #dfe9fc;
+    padding: 10px 20px;
+    border: 2px solid #dfe9fc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+}
+
+.content {
+    text-align: center;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 50px;
+}
+
+.subtitle {
+    font-weight: 400;
+    font-size: 30px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+    padding: 0 20px;
+}
+
+.card {
+    background-color: #0b1329;
+    border: 1px solid #223154;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: left;
+}
+
+.card-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+}
+
+.card-details {
+    padding: 16px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    color: #dfe9fc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-artist {
+    font-size: 14px;
+    color: #798eb8;
+    margin: 4px 0 0 0;
+}
+
+/* Layout container for multi-button row */
+.download-options {
+    display: flex;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.card-link {
+    display: inline-block;
+    color: #dfe9fc; /* Switched from green to your main theme ice blue */
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    border: 1px solid #223154;
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+
+.card-link:hover {
+    background-color: #223154;
+}

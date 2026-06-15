@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CoverCollector</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="content">
+    <header class="title">
+        CoverCollector
+    </header>
+    <h1 class="subtitle">
+        A minimalist interface for collecting album covers.
+    </h1>
+
+    <form class="form">
+        <label class="label">Artist Name:</label>
+        <input class="search-bar" type="text" id="artistInput" placeholder="e.g., Kendrick Lamar">
+
+        <label class="label">Album Title:</label>
+        <input class="search-bar" type="text" id="albumInput" placeholder="e.g., GNX">
+
+        <button class="search-button" type="submit">Search</button>
+    </form>
+
+    <div class="grid-container" id="resultsGrid"></div>
+</div>
+
+<script>
+    document.querySelector('.form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const artist = document.getElementById('artistInput').value.trim();
+        const album = document.getElementById('albumInput').value.trim();
+        const grid = document.getElementById('resultsGrid');
+
+        grid.innerHTML = '<p style="color: #798eb8; text-align: center; width: 100%;">Searching databases...</p>';
+
+        try {
+            const response = await fetch(`/api/album?artist=${encodeURIComponent(artist)}&album=${encodeURIComponent(album)}`);
+            if (!response.ok) throw new Error('No artwork located.');
+
+            const data = await response.json();
+            grid.innerHTML = '';
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                card.innerHTML = `
+                        <img src="${item.highResCover}" alt="${item.albumName}" class="card-img" loading="lazy">
+                        <div class="card-details">
+                            <h3 class="card-title">${item.albumName}</h3>
+                            <p class="card-artist">${item.artistName} (${item.releaseDate})</p>
+
+                            <div class="download-options">
+                                <a href="${item.highResCover}" download="${item.albumName}_HighRes.jpg" target="_blank" class="card-link">
+                                    HQ (3000×3000)
+                                </a>
+                                <a href="${item.lowResCover}" download="${item.albumName}_LowRes.jpg" target="_blank" class="card-link">
+                                    LQ (500×500)
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                grid.appendChild(card);
+            });
+
+        } catch (err) {
+            grid.innerHTML = `<p style="color: #f87171; text-align: center; width: 100%;">${err.message}</p>`;
+        }
+    });
+</script>
+</body>
+</html>
